@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Twitch Backend</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="src/style.css">
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="./node_modules/@materializecss/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+    </head>
+
+    <body>
+        <div class="m-3">
+            <div class="s12 m6 input-field outlined" id="parsecField" style="width: 75%;">
+                <input id="parsec" type="text" placeholder=" ">
+                <label for="parsec">Parsec Link</label>
+            </div>
+
+            <div class="my-3 s12 m6 input-field outlined" id="usernameField" style="width: 75%;">
+                <input id="username" type="text" placeholder=" ">
+                <label for="username">Twitch Username</label>
+            </div>
+
+            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light">
+                <i class="material-icons">sports_esports</i>Pass Controller
+            </a>
+        </div>
+
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="./node_modules/@materializecss/materialize/dist/js/materialize.min.js"></script>
+    </body>
+</html>
