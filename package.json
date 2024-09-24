@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "twitch extenstion to \"pass\" the controller to a viewer",
   "main": "backend.html",
+  "type": "module",
   "scripts": {
-    "test": "http-server -c-1"
+    "test": "start npx vite && start npx http-server -c-1 --cors -p http://localhost:8080"
   },
   "author": "satalight",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "vite": "^5.4.7"
   },
   "dependencies": {
-    "@materializecss/materialize": "^2.1.1"
+    "@materializecss/materialize": "^2.1.1",
+    "@twurple/auth-ext": "^7.1.0",
+    "@twurple/chat": "^7.1.0"
   }
 }

@@ -3,8 +3,10 @@
     <head>
         <title>Twitch Backend</title>
         <meta charset="UTF-8" />
+        
         <link rel="stylesheet" href="src/style.css">
         <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+        <script type="module" src="./src/backend.js"></script>
 
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,7 +26,7 @@
                 <label for="username">Twitch Username</label>
             </div>
 
-            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light">
+            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light" onclick="send()">
                 <i class="material-icons">sports_esports</i>Pass Controller
             </a>
         </div>
