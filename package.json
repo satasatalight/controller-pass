@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@materializecss/materialize": "^2.1.1",
-    "@twurple/auth-ext": "^7.1.0",
-    "@twurple/chat": "^7.1.0"
+    "@twurple/api": "^7.1.0",
+    "@twurple/auth-ext": "^7.1.0"
   }
 }
