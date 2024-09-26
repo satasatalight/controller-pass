@@ -1,23 +1,28 @@
-import { ExtensionAuthProvider } from "../node_modules/@twurple/auth-ext/es/index.mjs";
-import { ChatClient } from "../node_modules/@twurple/chat/es/index.mjs";
+// import { ExtensionAuthProvider } from "@twurple/auth-ext";
+// import { AppTokenAuthProvider } from '@twurple/auth';
+import { StaticAuthProvider } from '@twurple/auth';
+import { ChatClient } from "@twurple/chat";
 
-let parsecLink;
-let twitchUsername;
-
-let clientId = process.env.CONTROLLER_PASS_CLIENT_KEY;
 let authProvider;
 let chatClient;
 
+let clientId        = import.meta.env.VITE_CONTROLLER_PASS_CLIENT_ID;
+let clientSecret    = import.meta.env.VITE_CONTROLLER_PASS_CLIENT_SECRET;
+let accessToken     = import.meta.env.VITE_DEV_ACCESS_TOKEN;
+
 window.onload = (event) => {
-    print(clientId);
-    print("oifhgoihioghofhiogh");
-    authProvider    = new ExtensionAuthProvider(clientId);
-    // chatClient      = new ChatClient({authProvider, })
+    authProvider    = new StaticAuthProvider(clientId, accessToken);
+    chatClient      = new ChatClient({authProvider, channels: ['satalight_'] });
+    chatClient.connect();
+    chatClient.say('satalight_', "CONNECTED!");
+
+    console.log(authProvider);
+    console.log(chatClient);
 }
 
 function send(){
-    parsecLink      = document.getElementById("parsec").value;
-    twitchUsername  = document.getElementById("username").value;
+    let parsecLink      = document.getElementById("parsec").value;
+    let twitchUsername  = document.getElementById("username").value;
 
 
 }

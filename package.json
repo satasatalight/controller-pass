@@ -5,12 +5,11 @@
   "main": "backend.html",
   "type": "module",
   "scripts": {
-    "test": "start npx vite && start npx http-server -c-1 --cors -p http://localhost:8080"
+    "dev": "vite"
   },
   "author": "satalight",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^14.1.1",
     "vite": "^5.4.7"
   },
   "dependencies": {
