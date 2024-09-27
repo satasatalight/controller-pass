@@ -1,6 +1,11 @@
+let userId;
 
-window.Twitch.ext.listen("broadcast", (target, contentType, message) => {
-    console.log(target);
-    console.log(contentType);
-    console.log(message);
-})
+window.Twitch.ext.onAuthorized(function(auth) {
+    userId = auth.userId;
+    console.log("Connected!");
+
+    window.Twitch.ext.listen("whisper-" + userId, function(message) {
+        console.log("Recieved!");
+        console.log(message);
+    });
+});
