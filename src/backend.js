@@ -32,11 +32,11 @@ async function send(){
     }
 
     clearError();
-    window.Twitch.ext.send("whisper-U" + user.id , "application/json", {status: "connect", parsec: parsecLink});
+    window.Twitch.ext.send("whisper-U" + user.id , "application/json", {header: "controller-pass", status: "connect", parsec: parsecLink});
 }
 
 function disconnect() {
-    window.Twitch.ext.send("whisper-U" + user.id , "application/json", {status: "disconnect"});
+    window.Twitch.ext.send("whisper-U" + user.id , "application/json", {header: "controller-pass", status: "disconnect"});
     user = null;
 }
 
