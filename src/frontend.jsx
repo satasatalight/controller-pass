@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client'
 import React from 'react';
 
 let panel = document.getElementById("panel");
-let root  = createRoot( panel );
+let root  = createRoot(panel);
 
 window.Twitch.ext.onAuthorized(function(auth) {
     let userId = auth.userId;
@@ -12,13 +12,17 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
         if(message.header == "controller-pass"){
             console.log("Recieved!");
-            statusHandler(message.status);
+            
+            statusHandler(message);
         }
     });
 });
 
-function statusHandler(status){
-    switch(status){
+
+
+
+function statusHandler(message){
+    switch(message.status){
         case "connect":
             console.log("Connected!");
             root.render(<ConnectCard/>);
@@ -53,3 +57,10 @@ function ConnectCard(){
         </div>
     );
 }
+
+
+
+
+window.Twitch.ext.onError(function(error) {
+    console.log(error);
+});

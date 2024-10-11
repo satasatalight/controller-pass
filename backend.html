@@ -17,18 +17,18 @@
     <body>
         <div class="m-3">
             <div class="s12 m6 input-field outlined" id="parsecField" style="width: 75%;">
-                <input id  ="parsec" type="text" placeholder=" ">
+                <input id  ="parsec" type="text" placeholder=" " onchange="linkCheck(this.value)">
                 <label for ="parsec">Parsec Link</label>
                 <span  id  ="parsecError" class="supporting-text" style="color: white"></span>
             </div>
 
             <div class="my-3 s12 m6 input-field outlined" id="usernameField" style="width: 75%;">
-                <input id  ="username" type="text" placeholder=" ">
+                <input id  ="username" type="text" placeholder=" " onchange="userCheck(this.value)">
                 <label for ="username">Twitch Username</label>
                 <span  id  ="usernameError" class="supporting-text" style="color: white"></span>
             </div>
 
-            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light" onclick="send()">
+            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light disabled" id="connectButton" onclick="connect()">
                 <i class="material-icons">sports_esports</i>Pass Controller
             </a>
         </div>
