@@ -6,6 +6,8 @@ export default defineConfig({
         port: 8080
     },
 
+    base: './',
+
     build: {
         rollupOptions: {
             input: {
