@@ -3,6 +3,7 @@ import { ApiClient } from "@twurple/api";
 
 let apiClient;
 let user;
+let lastUser;
 let lastLink;
 let errorStatus = 0; // 0 = both invalid, 1 = parsec valid, 2 = username valid, 3 = both valid
 
@@ -21,24 +22,27 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
 
 async function connect(){
+    if(errorStatus != 3) return; // just in case
+
     let parsecLink      = document.getElementById("parsec").value;
-    
-    // send controller after link & username checks
-    if(errorStatus == 3){
-        let splitLink = parsecLink.split('/');
-        
-        window.Twitch.ext.send("whisper-U" + user.id , "application/json", 
-            {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
-        
-        lastLink = parsecLink;
-        console.log("sent to ", user.name);
+    let splitLink       = parsecLink.split('/');
+
+    if(lastUser){
+        disconnect(lastUser);
+        lastUser = null;
     }
+    
+    window.Twitch.ext.send("whisper-U" + user.id , "application/json", 
+        {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
+    
+    lastUser = user;
+    lastLink = parsecLink;
+    console.log("sent to ", user.name);
 }
 
-function disconnect() {
-    window.Twitch.ext.send("whisper-U" + user.id , "application/json", 
+function disconnect(target) {
+    window.Twitch.ext.send("whisper-U" + target.id , "application/json", 
         {header: "controller-pass", status: "disconnect"});
-    user = null;
 }
 
 
@@ -51,11 +55,6 @@ async function checkUsername(username){
     if(!bannedCharacters.test(username)){
         error("username", "Invalid username!");
         return;
-    }
-
-    // if user is already connected, disconnect
-    if(user){
-        disconnect();
     }
 
     user = await apiClient.users.getUserByName(username);
@@ -72,6 +71,7 @@ async function checkUsername(username){
 function checkParsecLink(link){
     let weirdCharacters = /([ ,!?@#$%^&*()\\`~_\-+=[\]{};'"<>|])+/g;
     let parsecURL       = /^(https:\/\/parsec.gg\/g\/)+/g;
+    let splitLink       = link.split('/');
 
     // checking for weird characters
     if(weirdCharacters.test(link)){
@@ -81,14 +81,17 @@ function checkParsecLink(link){
     else if(!parsecURL.test(link)){
         error("parsec", "Link doesn't start with 'https://parsec.gg/g/'!");
     }
+    // checking link formatting
+    else if(splitLink.length != 7){
+        error("parsec", "Invalid link format!");
+    }
+    else if(splitLink[4].length != 27 || splitLink[5].length != 8){
+        error("parsec", "Invalid link format!");
+    }
     // checking for new link
     else if(link == lastLink){
         error("parsec", "Refresh your invite link!");
     }
-    // checking link formatting
-    else if(link.split('/').length != 7){
-        error("parsec", "Invalid link format!");
-    } 
     else{
         clearError("parsec");
     }

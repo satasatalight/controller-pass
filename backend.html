@@ -17,13 +17,13 @@
     <body>
         <div class="m-3">
             <div class="s12 m6 input-field outlined" id="parsecField" style="width: 75%;">
-                <input id  ="parsec" type="text" placeholder=" " onchange="linkCheck(this.value)">
+                <input id  ="parsec" type="text" placeholder=" " oninput="linkCheck(this.value)">
                 <label for ="parsec">Parsec Link</label>
                 <span  id  ="parsecError" class="supporting-text" style="color: white"></span>
             </div>
 
             <div class="my-3 s12 m6 input-field outlined" id="usernameField" style="width: 75%;">
-                <input id  ="username" type="text" placeholder=" " onchange="userCheck(this.value)">
+                <input id  ="username" type="text" placeholder=" " oninput="userCheck(this.value)">
                 <label for ="username">Twitch Username</label>
                 <span  id  ="usernameError" class="supporting-text" style="color: white"></span>
             </div>
