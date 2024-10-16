@@ -1,5 +1,7 @@
-# controller-pass
- Twitch Extension to "pass" the controller to a viewer.
+# Controller Pass!
+ Twitch Extension to "pass" the controller to a viewer. 
+
+ To setup controller-pass, check [quickstart.md](https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md). If you have any errors, see [troubleshooting.md](https://github.com/satasatalight/controller-pass/blob/main/help/troubleshooting.md) for more detailed explanations and solutions. If you are still confused, or have an undocumented issue, join the [Discord](discord.gg) for help.
 
 ## TO DO
 
@@ -16,3 +18,4 @@
 - [ ] Dark Mode
 - [ ] Overlay Location Options
 - [ ] Make the UI look cooler
+- [ ] Disable refresh join link warning

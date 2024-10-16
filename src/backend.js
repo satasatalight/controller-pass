@@ -48,26 +48,6 @@ function disconnect(target) {
 
 
 
-async function checkUsername(username){
-    let bannedCharacters = /^[a-zA-Z0-9_]{4,25}$/g;
-
-    // check for valid username
-    if(!bannedCharacters.test(username)){
-        error("username", "Invalid username!");
-        return;
-    }
-
-    user = await apiClient.users.getUserByName(username);
-
-    // check if user is found by twitchApi
-    if(!user){
-        error("username", "User doesn't exist!");
-        return;
-    }
-
-    clearError("username");
-}
-
 function checkParsecLink(link){
     let weirdCharacters = /([ ,!?@#$%^&*()\\`~_\-+=[\]{};'"<>|])+/g;
     let parsecURL       = /^(https:\/\/parsec.gg\/g\/)+/g;
@@ -75,7 +55,7 @@ function checkParsecLink(link){
 
     // checking for weird characters
     if(weirdCharacters.test(link)){
-        error("parsec", "Don't include weird characters! '\\,!?@#$%^&*()`~_-+=[]{};'\"<>|'");
+        error("parsec", "Don't include weird characters!");
     }
     // checking for 'https://parsec.gg/g/' at beginning
     else if(!parsecURL.test(link)){
@@ -95,6 +75,26 @@ function checkParsecLink(link){
     else{
         clearError("parsec");
     }
+}
+
+async function checkUsername(username){
+    let bannedCharacters = /^[a-zA-Z0-9_]{4,25}$/g;
+
+    // check for valid username
+    if(!bannedCharacters.test(username)){
+        error("username", "Invalid username!");
+        return;
+    }
+
+    user = await apiClient.users.getUserByName(username);
+
+    // check if user is found by twitchApi
+    if(!user){
+        error("username", "User doesn't exist!");
+        return;
+    }
+
+    clearError("username");
 }
 
 
