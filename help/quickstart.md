@@ -2,7 +2,7 @@
 
 ### Required:
 - [The Parsec Hosting Client](https://parsec.app/downloads)
-  - See [Hosting hardware requirements](https://support.parsec.app/hc/en-us/articles/4425688194189-Hardware-and-Software-Compatibility) to check your computer's compatibility.
+  - See [hosting hardware requirements](https://support.parsec.app/hc/en-us/articles/4425688194189-Hardware-and-Software-Compatibility) to check your computer's compatibility.
 - [This Extension](https://dashboard.twitch.tv/extensions/jacg3268f2bai475b14xk8q5dse21i-0.0.1)
 
 ## How to Use Controller-Pass:
@@ -10,15 +10,15 @@
 1. Go live on [Twitch.tv](twitch.tv).
 2. Navigate to the "Stream Manager" tab on the left side of your [Twitch stream dashboard](https://dashboard.twitch.tv).
 3. Open up the "Quick Actions" panel. By default, this should be placed underneath your stream preview window.
-  - You can reset to the default layout by clicking the "Stream Manager" dropdown on the top left, choosing "Reset to Default," and saving changes.
+    - You can reset to the default layout by clicking the "Stream Manager" dropdown on the top left, choosing "Reset to Default," and saving changes.
 4. Click the "Controller Pass" Quick Action.
-  - This will load in a seperate window, some browsers block pop-ups by default. You may have to make an exception in your browser for dashboard.twitch.tv.
+    - This will load in a seperate window, some browsers block pop-ups by default. You may have to make an exception in your browser for dashboard.twitch.tv.
 
 ### Parsec Side
 1. Open the [Parsec App](parsec://&) and login.
 2. Click the "Share" button under the computer you would like to stream.
-  - Parsec may initialize with no computers available. Click the "refresh" button in the top right to update the list, or wait a couple seconds for the program to auto-refresh.
-  - This will automatically copy the share link to your clipboard. If you misplace the link, you can copy it again by right clicking the text-box.
+    - Parsec may initialize with no computers available. Click the "refresh" button in the top right to update the list, or wait a couple seconds for the program to auto-refresh.
+    - This will automatically copy the share link to your clipboard. If you misplace the link, you can copy it again by right clicking the text-box.
 
 ### Pass The Controller!
 1. Switch back to the "Controller-Pass" Quick Action window.
@@ -68,7 +68,6 @@ You can always do these actions through the Parsec UI's bottom panel, however le
 Controller-pass is still a "Testing Extension" on Twitch! As such, viewers need to manually opt-in to participate. 
 
 You might want to remind viewers to enable the extension while live. To enable the extension:
-
 1. Hover over the livestream.
 2. Click the controller icon on the right of the stream window.
 3. Read the warning on extensions not evaluated by Twitch.
