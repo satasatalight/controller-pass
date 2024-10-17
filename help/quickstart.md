@@ -1,4 +1,5 @@
 # Quickstart Guide
+Controller-Pass is still in testing! If you have any errors, see [troubleshooting.md](https://github.com/satasatalight/controller-pass/blob/main/help/troubleshooting.md) for more detailed explanations and solutions. If you are still confused, or have an undocumented issue, join the [Discord](https://discord.gg/8qafaugUcD) for help.
 
 ### Required:
 - [The Parsec Hosting Client](https://parsec.app/downloads)
@@ -26,13 +27,12 @@
 3. Enter the username of a viewer into the " Twitch Username" input.
 4. Click "Pass the Controller" to give the viewer control!
 
-Controller-Pass is still in testing! If you have any errors, see [troubleshooting.md](https://github.com/satasatalight/controller-pass/blob/main/help/troubleshooting.md) for more detailed explanations and solutions. If you are still confused, or have an undocumented issue, join the [Discord](discord.gg) for help.
-
 ## Reccomendations
-Following the instructions above, you can get the extension running with the default Parsec setup pretty easily. However, there are a couple additional settings and reminders you can follow to make the extension work as smoothly as possible.
+Following the instructions above, you can get the extension running with the default Parsec setup pretty easily. However, there are a couple additional settings and reminders you can follow to make the extension work as smoothly and safely as possible.
 
 ### Refresh Your Join Link
-Each time you pass the controller, make sure to invalidate your previous Parsec join link and send a new one so past users can't continue to connect. To refresh your link:
+Each time you pass the controller, make sure to invalidate your previous Parsec join link and send a new one so past users can't continue to connect.  
+To refresh your link:
 
 1. Click the red "X" icon on the right of the link.
 2. Generate a new link by clicking the "Share" button again.
@@ -40,7 +40,8 @@ Each time you pass the controller, make sure to invalidate your previous Parsec 
 Now, your previous link is inavlidated and you have a new link available to [pass the controller](https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md#pass-the-controller) with.
 
 ### Limit the Stream Window
-By default, Parsec streams your entire primary monitor. To avoid sharing any private information, you should limit the stream to only your gameplay window. To do this:
+By default, Parsec streams your entire primary monitor.  
+To avoid sharing any private information, you should limit the stream to only your gameplay window. To do this:
 
 1. Open the [Parsec App](parsec://&) while having your game window ready and open.
 2. Navigate to the settings menu by clicking the gear icon on the left sidebar.
@@ -48,6 +49,11 @@ By default, Parsec streams your entire primary monitor. To avoid sharing any pri
 4. Enable the feature by opening the dropdown menu and clicking "On". By default, the dropdown should read "Off".
 
 You will now see a checklist of open applications that Parsec has detected on your computer. Check off each application you want viewers to be able to interact with by clicking the empty box to the left of the program's icon. We reccomend only enabling the game window unless you intend viewers to use other elements onscreen. 
+
+### Don't give more than Controller permissions
+By default, when viewers not on your friends list join, Parsec will only give controller permissions to the connected user.  
+We don't reccomend giving anything past that! It's pretty dangerous to give anyone outside more control on your computer.  
+Unfortunately this means all viewers need a usb / bluetooth controller connected to participate. Sorry!
 
 ### Set Games to Borderless Fullscreen
 This process requires a lot of switching between windows! Which can mess with some games' functionality if done too often. 

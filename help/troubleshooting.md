@@ -1,7 +1,7 @@
 # Error Guide
 This document lists all errors you can get while using the controller-pass backend. 
 
-To setup controller-pass, check [quickstart.md](https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md). If you are still confused, or have an undocumented issue, join the [Discord](discord.gg) for help.
+To setup controller-pass, check [quickstart.md](https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md). If you are still confused, or have an undocumented issue, join the [Discord](https://discord.gg/8qafaugUcD) for help.
 
 ## Parsec Link
 ### Don't Include Weird Characters!
@@ -19,6 +19,7 @@ Your peer_id should be the 27 characters after '/g/' in the link. Your host_secr
 
 ### Refresh your invite link!
 Each time you pass the controller, you should refresh your join link to prevent past viewers from joining.  
+This error will show up each time you click "Pass Controller" since the extension will check for a new link immediately after sending. 
 To refresh your link and generate a new host_secret, check the [quickstart guide](https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md#refresh-your-join-link).
 
 ## Twitch Username

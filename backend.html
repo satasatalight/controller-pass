@@ -18,21 +18,32 @@
             <div class="s12 m6 input-field outlined" id="parsecField" style="width: 75%;">
                 <input id  ="parsec" type="text" placeholder=" " oninput="linkCheck(this.value)">
                 <label for ="parsec">Parsec Link</label>
-                <span  id  ="parsecError" class="supporting-text" style="color: white"></span>
+                <span class="supporting-text"><a id="parsecError" style="color: white" rel="noopener noreferrer" target="_blank"></a></span>
             </div>
 
             <div class="my-3 s12 m6 input-field outlined" id="usernameField" style="width: 75%;">
                 <input id  ="username" type="text" placeholder=" " oninput="userCheck(this.value)">
                 <label for ="username">Twitch Username</label>
-                <span  id  ="usernameError" class="supporting-text" style="color: white"></span>
+                <span class="supporting-text"><a id="usernameError" style="color: white" rel="noopener noreferrer" target="_blank"></a></span>
             </div>
 
             <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light disabled" id="connectButton" onclick="connect()">
                 <i class="material-icons">sports_esports</i>Pass Controller
             </a>
 
-            <!--JavaScript at end of body for optimized loading-->
-            <script type="module" src="./node_modules/@materializecss/materialize/dist/js/materialize.min.js"></script>
+            <a tabindex="0" class="btn filled rounded disabled" id="disconnectButton" onclick="disconnect()">
+                Disconnect
+            </a>
+
+            <div style="position: absolute; bottom: 0%;" class="card-panel orange white-text icon-left ml-2 mr-4">
+                <i style="float: left; font-size: 3em;" class="white-text material-icons pr-4">warning</i>
+                Warning! If you recieve an excessive amount of requests to join in Parsec, your link probably got leaked!<br>
+                Make sure you <a href="https://github.com/satasatalight/controller-pass/blob/main/help/quickstart.md#refresh-your-join-link" rel="noopener noreferrer" target="_blank">
+                    invalidate previous links </a> before sending a new one.
+            </div>
         </div>
+
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="module" src="./node_modules/@materializecss/materialize/dist/js/materialize.min.js"></script>
     </body>
 </html>
