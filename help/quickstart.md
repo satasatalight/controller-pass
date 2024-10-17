@@ -52,6 +52,7 @@ You will now see a checklist of open applications that Parsec has detected on yo
 
 ### Don't give more than Controller permissions
 By default, when viewers not on your friends list join, Parsec will only give controller permissions to the connected user.  
+
 We don't reccomend giving anything past that! It's pretty dangerous to give anyone outside more control on your computer.  
 Unfortunately this means all viewers need a usb / bluetooth controller connected to participate. Sorry!
 
@@ -75,6 +76,6 @@ Controller-pass is still a "Testing Extension" on Twitch! As such, viewers need 
 
 You might want to remind viewers to enable the extension while live. To enable the extension:
 1. Hover over the livestream.
-2. Click the controller icon on the right of the stream window.
+2. Click the puzzle piece icon on the right of the stream window.
 3. Read the warning on extensions not evaluated by Twitch.
 4. Click "Accept" to opt-in.
