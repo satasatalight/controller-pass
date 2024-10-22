@@ -18,3 +18,9 @@
 - [ ] Dark Mode
 - [ ] Overlay Location Options
 - [ ] Make the UI look cooler
+
+## Open Source Licenses / Dependencies
+- [Materialize](https://materializeweb.com/)
+- [Twurple](https://twurple.js.org/)
+- [React](https://react.dev/)
+- Dev: [Vite](https://vite.dev/)
