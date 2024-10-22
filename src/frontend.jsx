@@ -5,6 +5,11 @@ import { useRef } from 'react';
 let panel = document.getElementById("panel");
 let root  = createRoot(panel);
 
+// materialize automatically sets background-color for body to a dark gray when set to dark mode
+// workaround to always set light mode and get transparent background
+let r = document.querySelector(':root');
+r.style.setProperty('color-scheme', 'light');
+
 window.Twitch.ext.onAuthorized(function(auth) {
     let userId = auth.userId;
 
@@ -57,7 +62,7 @@ function ConnectCard(props){
         <div id="card" className="card py-5" style={{width: "100%", height: "100%"}}>
             <div className="card-content">
                 <span className="card-title">You've been passed the controller!</span>
-                <p>Don't embarrass yourself up there! Good Luck!</p>
+                <p>We recommend connecting a bluetooth / usb controller. Good Luck!</p>
             </div>
 
             <div className="card-action center-align my-2">

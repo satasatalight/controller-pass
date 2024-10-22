@@ -7,10 +7,22 @@ let lastUser;
 let lastLink;
 let errorStatus = 0; // 0 = both invalid, 1 = parsec valid, 2 = username valid, 3 = both valid
 
-globalThis.connect      = connect;
-globalThis.disconnect   = disconnect;
-globalThis.linkCheck    = checkParsecLink;
-globalThis.userCheck    = checkUsername;
+let parsecInput;
+let userInput;
+let connectButton;
+let disconnectButton;
+
+window.onload = () => {
+    parsecInput      = document.getElementById("parsec");
+    userInput        = document.getElementById("username");
+    connectButton    = document.getElementById("connectButton");
+    disconnectButton = document.getElementById("disconnectButton");
+
+    parsecInput.addEventListener        ("input", checkParsecLink);
+    userInput.addEventListener          ("input", checkUsername);
+    connectButton.addEventListener      ("click", connect);
+    disconnectButton.addEventListener   ("click", disconnect);
+}
 
 window.Twitch.ext.onAuthorized(function(auth) {
     let authProvider    = new ExtensionAuthProvider(auth.clientId);
@@ -23,7 +35,7 @@ window.Twitch.ext.onAuthorized(function(auth) {
 async function connect(){
     if(errorStatus != 3) return; // just in case
 
-    let parsecLink      = document.getElementById("parsec").value;
+    let parsecLink      = parsecInput.value;
     let splitLink       = parsecLink.split('/');
 
     if(lastUser){
@@ -41,6 +53,8 @@ async function connect(){
 }
 
 function disconnect() {
+    if(!lastUser) return; // just in case
+
     window.Twitch.ext.send("whisper-U" + lastUser.id , "application/json", 
         {header: "controller-pass", status: "disconnect"});
     
@@ -50,16 +64,12 @@ function disconnect() {
 }
 
 function enableDisconnectButton(){
-    let disconnectButton = document.getElementById("disconnectButton");
-
     disconnectButton.classList.remove("disabled");
     disconnectButton.classList.add("red");
     disconnectButton.classList.add("darken-4");
 }
 
 function disableDisconnectButton(){
-    let disconnectButton = document.getElementById("disconnectButton");
-
     disconnectButton.blur();
     disconnectButton.classList.add("disabled");
     disconnectButton.classList.remove("red");
@@ -69,7 +79,8 @@ function disableDisconnectButton(){
 
 
 
-function checkParsecLink(link){
+function checkParsecLink(element){
+    let link            = element.currentTarget.value
     let weirdCharacters = /([ ,!?@#$%^&*()\\`~_\-+=[\]{};'"<>|])+/g;
     let parsecURL       = /^(https:\/\/parsec.gg\/g\/)+/g;
     let splitLink       = link.split('/');
@@ -98,7 +109,8 @@ function checkParsecLink(link){
     }
 }
 
-async function checkUsername(username){
+async function checkUsername(element){
+    let username         = element.currentTarget.value
     let bannedCharacters = /^[a-zA-Z0-9_]{4,25}$/g;
 
     // check for valid username
@@ -125,8 +137,9 @@ function error(target, link, message){
     if(target == "parsec")      errorStatus &= ~1;
     if(target == "username")    errorStatus &= ~2;
 
-    document.getElementById("connectButton").blur();
-    document.getElementById("connectButton").classList  .add("disabled");
+    connectButton.blur();
+    connectButton.classList.add("disabled");
+
     document.getElementById(target + "Field").classList .add("error");
     document.getElementById(target + "Error").href      = "https://github.com/satasatalight/controller-pass/blob/main/help/troubleshooting.md#" + link;
     document.getElementById(target + "Error").innerText = message;
@@ -140,7 +153,7 @@ function clearError(target){
     document.getElementById(target + "Error").href      = "";
     document.getElementById(target + "Error").innerText = "";
 
-    if(errorStatus == 3) document.getElementById("connectButton").classList.remove("disabled");
+    if(errorStatus == 3) connectButton.classList.remove("disabled");
 }
 
 window.Twitch.ext.onError(function(error) {

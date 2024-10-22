@@ -16,22 +16,22 @@
     <body>
         <div class="m-3">
             <div class="s12 m6 input-field outlined" id="parsecField" style="width: 75%;">
-                <input id  ="parsec" type="text" placeholder=" " oninput="linkCheck(this.value)">
+                <input id  ="parsec" type="text" placeholder=" ">
                 <label for ="parsec">Parsec Link</label>
                 <span class="supporting-text"><a id="parsecError" style="color: white" rel="noopener noreferrer" target="_blank"></a></span>
             </div>
 
             <div class="my-3 s12 m6 input-field outlined" id="usernameField" style="width: 75%;">
-                <input id  ="username" type="text" placeholder=" " oninput="userCheck(this.value)">
+                <input id  ="username" type="text" placeholder=" ">
                 <label for ="username">Twitch Username</label>
                 <span class="supporting-text"><a id="usernameError" style="color: white" rel="noopener noreferrer" target="_blank"></a></span>
             </div>
 
-            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light disabled" id="connectButton" onclick="connect()">
+            <a tabindex="0" class="btn filled icon-right rounded waves-effect waves-light disabled" id="connectButton">
                 <i class="material-icons">sports_esports</i>Pass Controller
             </a>
 
-            <a tabindex="0" class="btn filled rounded disabled" id="disconnectButton" onclick="disconnect()">
+            <a tabindex="0" class="btn filled rounded disabled" id="disconnectButton">
                 Disconnect
             </a>
 
