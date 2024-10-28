@@ -42,7 +42,7 @@ async function connect(){
         disconnect();
     }
     
-    window.Twitch.ext.send("whisper-U" + user.id , "application/json", 
+    window.Twitch.ext.send("whisper-" + user.id , "application/json", 
         {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
     lastUser = user;
@@ -126,6 +126,8 @@ async function checkUsername(element){
         error("username", "user-doesnt-exist", "User doesn't exist!");
         return;
     }
+
+    console.log(user.id);
 
     clearError("username");
 }

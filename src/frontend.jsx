@@ -13,7 +13,16 @@ r.style.setProperty('color-scheme', 'light');
 window.Twitch.ext.onAuthorized(function(auth) {
     let userId = auth.userId;
 
+    // if(!userId) {
+    //     window.Twitch.ext.actions.requestIdShare();
+    //     return;
+    // }
+
+    console.log(userId);
+    console.log("whisper-" + userId);
+
     window.Twitch.ext.listen("whisper-" + userId, function(target, contentType, messageJSON) {
+        console.log("udihgfhdufg");
         let message = JSON.parse(messageJSON);
 
         if(message.header == "controller-pass"){
