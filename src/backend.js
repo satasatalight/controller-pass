@@ -1,8 +1,11 @@
 import { ExtensionAuthProvider } from "@twurple/auth-ext";
 import { ApiClient } from "@twurple/api";
+import Express from "express"
 
 let apiClient;
-let user;
+
+let userList = new Map();
+let currentUser;
 let lastUser;
 let lastLink;
 let errorStatus = 0; // 0 = both invalid, 1 = parsec valid, 2 = username valid, 3 = both valid
@@ -27,6 +30,12 @@ window.onload = () => {
 window.Twitch.ext.onAuthorized(function(auth) {
     let authProvider    = new ExtensionAuthProvider(auth.clientId);
     apiClient           = new ApiClient({authProvider});
+
+    let app = Express();
+    app.post('./frontend.jsx', (req, res) => {
+        req.params.userId
+        req.params.key
+    })
 });
 
 
@@ -42,10 +51,10 @@ async function connect(){
         disconnect();
     }
     
-    window.Twitch.ext.send("whisper-" + user.id , "application/json", 
+    window.Twitch.ext.send("whisper-U" + currentUser.id , "application/json", 
         {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
-    lastUser = user;
+    lastUser = currentUser;
     lastLink = parsecLink;
     
     error("parsec", "refresh-your-invite-link", "Refresh your invite link!");
@@ -119,15 +128,13 @@ async function checkUsername(element){
         return;
     }
 
-    user = await apiClient.users.getUserByName(username);
+    currentUser = await apiClient.users.getUserByName(username);
 
     // check if user is found by twitchApi
-    if(!user){
+    if(!currentUser){
         error("username", "user-doesnt-exist", "User doesn't exist!");
         return;
     }
-
-    console.log(user.id);
 
     clearError("username");
 }

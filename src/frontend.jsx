@@ -11,18 +11,21 @@ let r = document.querySelector(':root');
 r.style.setProperty('color-scheme', 'light');
 
 window.Twitch.ext.onAuthorized(function(auth) {
-    let userId = auth.userId;
 
-    // if(!userId) {
-    //     window.Twitch.ext.actions.requestIdShare();
-    //     return;
-    // }
+    if(window.Twitch.ext.viewer.isLinked){
+        window.Twitch.ext.listen("broadcast", function(target, contentType, messageJSON){
+            let message = JSON.parse(messageJSON);
+    
+            if(message.header == "controller-pass" && message.status == "listening"){
+                passBackJWT(auth);
+            }
+        });
 
-    console.log(userId);
-    console.log("whisper-" + userId);
+    } else {
+        window.Twitch.ext.actions.requestIdShare();
+    }
 
-    window.Twitch.ext.listen("whisper-" + userId, function(target, contentType, messageJSON) {
-        console.log("udihgfhdufg");
+    window.Twitch.ext.listen("whisper-" + window.Twitch.ext.viewer.opaqueId, function(target, contentType, messageJSON) {
         let message = JSON.parse(messageJSON);
 
         if(message.header == "controller-pass"){
@@ -35,6 +38,17 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
 
 
+
+function passBackJWT(auth){
+    fetch('./backend.js', {
+        method: 'POST',
+        headers:{
+            'Authentication': 'Bearer ' + auth.token,
+        },
+    }).then(() => {
+       console.log("wowooww");
+    });
+}
 
 function statusHandler(message){
     switch(message.status){
@@ -56,6 +70,9 @@ function statusHandler(message){
             break;
     }
 }
+
+
+
 
 function ConnectCard(props){
     let iconRef = useRef(null);
@@ -93,6 +110,9 @@ function ConnectCard(props){
     );
 }
 
+function InfoCard(){
+
+}
 
 
 
