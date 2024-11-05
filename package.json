@@ -12,7 +12,8 @@
   "author": "satalight",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^5.4.7"
+    "vite": "^5.4.7",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
     "@materializecss/materialize": "^2.1.1",

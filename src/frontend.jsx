@@ -13,14 +13,7 @@ r.style.setProperty('color-scheme', 'light');
 window.Twitch.ext.onAuthorized(function(auth) {
 
     if(window.Twitch.ext.viewer.isLinked){
-        window.Twitch.ext.listen("broadcast", function(target, contentType, messageJSON){
-            let message = JSON.parse(messageJSON);
-    
-            if(message.header == "controller-pass" && message.status == "listening"){
-                passBackJWT(auth);
-            }
-        });
-
+        passJWT(auth);
     } else {
         window.Twitch.ext.actions.requestIdShare();
     }
@@ -39,14 +32,16 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
 
 
-function passBackJWT(auth){
+function passJWT(auth){
     fetch('./backend.js', {
         method: 'POST',
         headers:{
             'Authentication': 'Bearer ' + auth.token,
         },
-    }).then(() => {
-       console.log("wowooww");
+        body:{
+            userId: auth.userId,
+            opaqueId: window.Twitch.ext.viewer.opaqueId,
+        },
     });
 }
 

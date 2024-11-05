@@ -1,10 +1,8 @@
 import { ExtensionAuthProvider } from "@twurple/auth-ext";
 import { ApiClient } from "@twurple/api";
-import Express from "express"
 
 let apiClient;
 
-let userList = new Map();
 let currentUser;
 let lastUser;
 let lastLink;
@@ -30,12 +28,6 @@ window.onload = () => {
 window.Twitch.ext.onAuthorized(function(auth) {
     let authProvider    = new ExtensionAuthProvider(auth.clientId);
     apiClient           = new ApiClient({authProvider});
-
-    let app = Express();
-    app.post('./frontend.jsx', (req, res) => {
-        req.params.userId
-        req.params.key
-    })
 });
 
 
@@ -51,14 +43,14 @@ async function connect(){
         disconnect();
     }
     
-    window.Twitch.ext.send("whisper-U" + currentUser.id , "application/json", 
-        {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
+    // window.Twitch.ext.send("whisper-U" + currentUser.id , "application/json", 
+    //     {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
-    lastUser = currentUser;
-    lastLink = parsecLink;
+    // lastUser = currentUser;
+    // lastLink = parsecLink;
     
-    error("parsec", "refresh-your-invite-link", "Refresh your invite link!");
-    enableDisconnectButton();
+    // error("parsec", "refresh-your-invite-link", "Refresh your invite link!");
+    // enableDisconnectButton();
 }
 
 function disconnect() {
