@@ -14,6 +14,10 @@ let connectButton;
 let disconnectButton;
 
 window.onload = () => {
+    fetch("http://localhost:3000/api/message")
+        .then((response) => response.json())
+            .then((json) => console.log(json.message));
+
     parsecInput      = document.getElementById("parsec");
     userInput        = document.getElementById("username");
     connectButton    = document.getElementById("connectButton");

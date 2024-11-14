@@ -33,15 +33,12 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
 
 function passJWT(auth){
-    fetch('./backend.js', {
-        method: 'POST',
-        headers:{
-            'Authentication': 'Bearer ' + auth.token,
-        },
-        body:{
-            userId: auth.userId,
-            opaqueId: window.Twitch.ext.viewer.opaqueId,
-        },
+    fetch("http://localhost:3000/api/passAuth", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "authorization": "Bearer " + auth.token
+        }
     });
 }
 

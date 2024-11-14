@@ -1,6 +1,5 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 
 export default defineConfig({
@@ -18,9 +17,5 @@ export default defineConfig({
                 config:     resolve(__dirname, 'config.html'),
             },
         },
-    },
-
-    plugins: [
-        nodePolyfills()
-    ],
+    }
 });
