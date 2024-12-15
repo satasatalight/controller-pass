@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run vite\"",
     "vite": "vite",
-    "server": "node --env-file=.env server/server.js",
+    "server": "node --watch --env-file=.env server/server.js",
     "build": "vite build",
     "preview": "vite preview --port 8080"
   },
@@ -20,7 +20,6 @@
   "dependencies": {
     "@materializecss/materialize": "^2.1.1",
     "@twurple/api": "^7.1.0",
-    "@twurple/auth-ext": "^7.1.0",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.3.1",

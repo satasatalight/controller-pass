@@ -46,8 +46,8 @@ async function connect(){
     if(lastUser){
         disconnect();
     }
-    
-    // window.Twitch.ext.send("whisper-U" + currentUser.id , "application/json", 
+
+    // window.Twitch.ext.send("whisper-" + currentUser , "application/json", 
     //     {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
     // lastUser = currentUser;
@@ -60,7 +60,7 @@ async function connect(){
 function disconnect() {
     if(!lastUser) return; // just in case
 
-    window.Twitch.ext.send("whisper-U" + lastUser.id , "application/json", 
+    window.Twitch.ext.send("whisper-U" + lastUser , "application/json", 
         {header: "controller-pass", status: "disconnect"});
     
     lastUser = null;
@@ -124,13 +124,32 @@ async function checkUsername(element){
         return;
     }
 
-    currentUser = await apiClient.users.getUserByName(username);
+    let user = await apiClient.users.getUserByName(username);
 
     // check if user is found by twitchApi
-    if(!currentUser){
+    if(!user){
         error("username", "user-doesnt-exist", "User doesn't exist!");
         return;
     }
+
+    let response = await fetch("http://localhost:3000/api/getOpaqueId", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            "authorization": "Bearer " + window.Twitch.ext.viewer.sessionToken
+        },
+        body: JSON.stringify({ 
+            "user_id": user.id
+        }),
+    })
+    
+    // check if user is in chat
+    if (!response.ok) {
+        error("username", "placeholder", "User not found!");
+        throw new Error(`Response status: ${response.status}`);
+    }
+
+    currentUser = response.json().opaque_id;
 
     clearError("username");
 }

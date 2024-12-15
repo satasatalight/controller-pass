@@ -29,17 +29,37 @@ window.Twitch.ext.onAuthorized(function(auth) {
     });
 });
 
+window.onbeforeunload(function(){
+    if(window.Twitch.ext.viewer.isLinked){
+        removeJWT(window.Twitch.ext.viewer.sessionToken);
+    }
+})
+
 
 
 
 function passJWT(auth){
-    fetch("http://localhost:3000/api/passAuth", {
+    let response = fetch("http://localhost:3000/api/passAuth", {
         method: "POST",
         headers: {
             "Content-type": "application/json; charset=UTF-8",
             "authorization": "Bearer " + auth.token
         }
     });
+
+    console.log(response.json().message);
+}
+
+function removeJWT(auth){
+    let response = fetch("http://localhost:3000/api/removeAuth", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "authorization": "Bearer " + auth.token
+        }
+    });
+
+    console.log(response.json().message);
 }
 
 function statusHandler(message){

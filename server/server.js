@@ -1,16 +1,25 @@
 import express from "express"
 import jwt from "jsonwebtoken"
+import { ExtensionAuthProvider } from "@twurple/auth-ext";
+import { ApiClient } from "@twurple/api";
 
-
+let clientId    = process.env.CONTROLLER_PASS_CLIENT_ID;
 let key         = process.env.CONTROLLER_PASS_CLIENT_SECRET;
 let port        = process.env.PORT;
-let secret      = Buffer.from(key, 'base64');
-let app         = express();
-let channels    = new Map();
+
+let secret          = Buffer.from(key, 'base64');
+let app             = express();
+let authProvider    = new ExtensionAuthProvider(clientId);
+let apiClient       = new ApiClient({authProvider});
+let channels        = new Map();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use(express.static('website'));
 
 
-// Serving static files (HTML, CSS, JS)
-app.use(express.static('public'));
+
 
 // Defining a route for handling client communication
 app.get('/api/message', (req, res) => {
@@ -18,16 +27,21 @@ app.get('/api/message', (req, res) => {
     res.json({ message });
 });
 
-app.get('/api/getOpaqueId', (req, res) => {
+app.post('/api/getOpaqueId', (req, res) => {
     let broadcaster = verifyAuth(req, res);
 
-    console.log(req);
     if(broadcaster){
-        let opaqueId = channels.get(broadcaster.channel_id)[req.body["user_id"]];
+        try{
+            let opaqueId = channels.get(broadcaster.channel_id)[req.body['user_id']];
 
-        (opaqueId) ?
-            res.json({ opaque_id: opaqueId }) :
-            res.status(401).json({error: true, message: 'Invalid user id'});
+            if(opaqueId)
+                res.json({ opaque_id: opaqueId })
+            else
+                res.status(401).json({error: true, message: 'Invalid request'});
+        }
+        catch{
+            res.status(401).json({error: true, message: 'Invalid request'});
+        }
     }
 });
 
@@ -36,13 +50,10 @@ app.post('/api/passAuth', (req, res) => {
 
     if(user){
         addUser(user);
+        res.json({message: "passed"});
     }
 })
 
-// Starting the server
-app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
-});
 
 
 
@@ -67,7 +78,6 @@ function verifyAuth(req, res){
                     returnVal = null;
                 }
 
-                res.json({message: "passed"});
                 returnVal = decoded;
             }
         );
@@ -81,3 +91,11 @@ function verifyAuth(req, res){
 
     return returnVal;
 }
+
+
+
+
+// Starting the server
+app.listen(port, () => {
+    console.log(`Server is listening at http://localhost:${port}`);
+});
