@@ -1,8 +1,3 @@
-import { ExtensionAuthProvider } from "@twurple/auth-ext";
-import { ApiClient } from "@twurple/api";
-
-let apiClient;
-
 let currentUser;
 let lastUser;
 let lastLink;
@@ -14,10 +9,6 @@ let connectButton;
 let disconnectButton;
 
 window.onload = () => {
-    fetch("http://localhost:3000/api/message")
-        .then((response) => response.json())
-            .then((json) => console.log(json.message));
-
     parsecInput      = document.getElementById("parsec");
     userInput        = document.getElementById("username");
     connectButton    = document.getElementById("connectButton");
@@ -28,11 +19,6 @@ window.onload = () => {
     connectButton.addEventListener      ("click", connect);
     disconnectButton.addEventListener   ("click", disconnect);
 }
-
-window.Twitch.ext.onAuthorized(function(auth) {
-    let authProvider    = new ExtensionAuthProvider(auth.clientId);
-    apiClient           = new ApiClient({authProvider});
-});
 
 
 
@@ -47,14 +33,15 @@ async function connect(){
         disconnect();
     }
 
-    // window.Twitch.ext.send("whisper-" + currentUser , "application/json", 
-    //     {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
+    console.log("whisper-" + currentUser);
+    window.Twitch.ext.send("whisper-" + currentUser , "application/json", 
+        {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
-    // lastUser = currentUser;
-    // lastLink = parsecLink;
+    lastUser = currentUser;
+    lastLink = parsecLink;
     
-    // error("parsec", "refresh-your-invite-link", "Refresh your invite link!");
-    // enableDisconnectButton();
+    error("parsec", "refresh-your-invite-link", "Refresh your invite link!");
+    enableDisconnectButton();
 }
 
 function disconnect() {
@@ -121,37 +108,33 @@ async function checkUsername(element){
     // check for valid username
     if(!bannedCharacters.test(username)){
         error("username", "invalid-username", "Invalid username!");
+        console.log("invalid");
         return;
     }
 
-    let user = await apiClient.users.getUserByName(username);
-
-    // check if user is found by twitchApi
-    if(!user){
-        error("username", "user-doesnt-exist", "User doesn't exist!");
-        return;
-    }
-
-    let response = await fetch("http://localhost:3000/api/getOpaqueId", {
+    await fetch("http://localhost:3000/api/getOpaqueId", {
         method: "POST",
         headers: {
             "Content-type": "application/json",
             "authorization": "Bearer " + window.Twitch.ext.viewer.sessionToken
         },
         body: JSON.stringify({ 
-            "user_id": user.id
+            "username": username
         }),
+    }).then((response) => {
+        // check if user is in chat / twitch api
+        if (!response.ok) {
+            error("username", "placeholder", "User not found!");
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        // get opaque id
+        response.json().then((json) => {
+            currentUser = json.opaque_id;
+        })
+
+        clearError("username");
     })
-    
-    // check if user is in chat
-    if (!response.ok) {
-        error("username", "placeholder", "User not found!");
-        throw new Error(`Response status: ${response.status}`);
-    }
-
-    currentUser = response.json().opaque_id;
-
-    clearError("username");
 }
 
 

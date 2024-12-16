@@ -18,6 +18,7 @@ window.Twitch.ext.onAuthorized(function(auth) {
         window.Twitch.ext.actions.requestIdShare();
     }
 
+    console.log("whisper-" + window.Twitch.ext.viewer.opaqueId);
     window.Twitch.ext.listen("whisper-" + window.Twitch.ext.viewer.opaqueId, function(target, contentType, messageJSON) {
         let message = JSON.parse(messageJSON);
 
@@ -29,11 +30,11 @@ window.Twitch.ext.onAuthorized(function(auth) {
     });
 });
 
-window.onbeforeunload(function(){
-    if(window.Twitch.ext.viewer.isLinked){
-        removeJWT(window.Twitch.ext.viewer.sessionToken);
-    }
-})
+// window.onbeforeunload(function(){
+//     if(window.Twitch.ext.viewer.isLinked){
+//         removeJWT(window.Twitch.ext.viewer.sessionToken);
+//     }
+// })
 
 
 
@@ -47,7 +48,7 @@ function passJWT(auth){
         }
     });
 
-    console.log(response.json().message);
+    // console.log(response.json().message);
 }
 
 function removeJWT(auth){

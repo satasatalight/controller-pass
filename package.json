@@ -20,6 +20,7 @@
   "dependencies": {
     "@materializecss/materialize": "^2.1.1",
     "@twurple/api": "^7.1.0",
+    "@twurple/auth": "^7.2.0",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.3.1",

@@ -1,15 +1,16 @@
-import express from "express"
-import jwt from "jsonwebtoken"
-import { ExtensionAuthProvider } from "@twurple/auth-ext";
+import express from "express";
+import jwt from "jsonwebtoken";
+import { AppTokenAuthProvider } from '@twurple/auth';
 import { ApiClient } from "@twurple/api";
 
 let clientId    = process.env.CONTROLLER_PASS_CLIENT_ID;
-let key         = process.env.CONTROLLER_PASS_CLIENT_SECRET;
+let extKey      = process.env.CONTROLLER_PASS_EXTENSION_SECRET;
+let apiSecret   = process.env.CONTROLLER_PASS_CLIENT_SECRET;
 let port        = process.env.PORT;
 
-let secret          = Buffer.from(key, 'base64');
+let extSecret       = Buffer.from(extKey, 'base64');
 let app             = express();
-let authProvider    = new ExtensionAuthProvider(clientId);
+let authProvider    = new AppTokenAuthProvider(clientId, apiSecret);
 let apiClient       = new ApiClient({authProvider});
 let channels        = new Map();
 
@@ -32,12 +33,14 @@ app.post('/api/getOpaqueId', (req, res) => {
 
     if(broadcaster){
         try{
-            let opaqueId = channels.get(broadcaster.channel_id)[req.body['user_id']];
+            let opaqueId = channels.get(broadcaster.channel_id)[req.body['username']];
 
-            if(opaqueId)
+            if(opaqueId){
                 res.json({ opaque_id: opaqueId })
-            else
+            }
+            else{
                 res.status(401).json({error: true, message: 'Invalid request'});
+            }
         }
         catch{
             res.status(401).json({error: true, message: 'Invalid request'});
@@ -57,39 +60,31 @@ app.post('/api/passAuth', (req, res) => {
 
 
 
-function addUser(user){
+async function addUser(user){
     if(!channels.get(user.channel_id)){
         channels.set(user.channel_id, Object.create(null));
     }
     
-    channels.get(user.channel_id)[user.user_id] = user.opaque_user_id;
+    let apiUser = await apiClient.users.getUserById(user.user_id);
+    channels.get(user.channel_id)[apiUser.name] = user.opaque_user_id;
 }
 
 function verifyAuth(req, res){
     let [ type, auth ] = req.headers['authorization'].split(' ');
-    let returnVal;
 
     if(type == "Bearer"){
-        jwt.verify(auth, secret, { algorithms: ['HS256'] },
-            (error, decoded) => {
-                if(error){
-                    console.log(error);
-                    res.status(401).json({error: true, message: 'Invalid JWT'});
-                    returnVal = null;
-                }
-
-                returnVal = decoded;
-            }
-        );
+        try { 
+            return jwt.verify(auth, extSecret, { algorithms: ['HS256'] });
+        } 
+        catch {
+            console.error("FAILED: ", req.headers.authorization);
+            res.status(401).json({error: true, message: 'Invalid authorization'});    
+        }
     }
-
     else {
-        console.log("FAILED: ", req.headers.authorization);
+        console.error("FAILED: ", req.headers.authorization);
         res.status(401).json({error: true, message: 'Invalid authorization'});
-        returnVal = null;
     }
-
-    return returnVal;
 }
 
 
