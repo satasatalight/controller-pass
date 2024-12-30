@@ -33,7 +33,6 @@ async function connect(){
         disconnect();
     }
 
-    console.log("whisper-" + currentUser);
     window.Twitch.ext.send("whisper-" + currentUser , "application/json", 
         {header: "controller-pass", status: "connect", peerId: splitLink[4], hostSecret: splitLink[5]});
     
@@ -47,7 +46,7 @@ async function connect(){
 function disconnect() {
     if(!lastUser) return; // just in case
 
-    window.Twitch.ext.send("whisper-U" + lastUser , "application/json", 
+    window.Twitch.ext.send("whisper-" + lastUser , "application/json", 
         {header: "controller-pass", status: "disconnect"});
     
     lastUser = null;
@@ -124,7 +123,7 @@ async function checkUsername(element){
     }).then((response) => {
         // check if user is in chat / twitch api
         if (!response.ok) {
-            error("username", "placeholder", "User not found!");
+            error("username", "user-not-found", "User not found!");
             throw new Error(`Response status: ${response.status}`);
         }
 

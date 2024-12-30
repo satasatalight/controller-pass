@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client'
 import { useRef } from 'react';
 
@@ -11,72 +11,44 @@ let r = document.querySelector(':root');
 r.style.setProperty('color-scheme', 'light');
 
 window.Twitch.ext.onAuthorized(function(auth) {
+    passJWT(auth);
 
-    if(window.Twitch.ext.viewer.isLinked){
-        passJWT(auth);
-    } else {
-        window.Twitch.ext.actions.requestIdShare();
-    }
-
-    console.log("whisper-" + window.Twitch.ext.viewer.opaqueId);
     window.Twitch.ext.listen("whisper-" + window.Twitch.ext.viewer.opaqueId, function(target, contentType, messageJSON) {
         let message = JSON.parse(messageJSON);
 
         if(message.header == "controller-pass"){
             console.log("Recieved!");
             
-            statusHandler(message);
+            root.render(<StatusHandler message={message}/>);
         }
     });
 });
-
-// window.onbeforeunload(function(){
-//     if(window.Twitch.ext.viewer.isLinked){
-//         removeJWT(window.Twitch.ext.viewer.sessionToken);
-//     }
-// })
 
 
 
 
 function passJWT(auth){
-    let response = fetch("http://localhost:3000/api/passAuth", {
+    fetch("http://localhost:3000/api/passAuth", {
         method: "POST",
         headers: {
             "Content-type": "application/json; charset=UTF-8",
             "authorization": "Bearer " + auth.token
         }
     });
-
-    // console.log(response.json().message);
 }
 
-function removeJWT(auth){
-    let response = fetch("http://localhost:3000/api/removeAuth", {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "authorization": "Bearer " + auth.token
-        }
-    });
-
-    console.log(response.json().message);
-}
-
-function statusHandler(message){
-    switch(message.status){
+function StatusHandler(props){
+    switch(props.message.status){
         case "connect":
             console.log("Connected!");
-            root.render(<ConnectCard peerId={message.peerId} hostSecret={message.hostSecret}/>);
             panel.classList.add("scale-in");
+            return <ConnectCard peerId={props.message.peerId} hostSecret={props.message.hostSecret}/>;
 
-            break;
         case "disconnect":
             console.log("Disconnected!");
-            root.render(<div id="card" className='card'></div>);
             panel.classList.remove("scale-in");
+            return <div id="card" className='card'></div>;
 
-            break;
         case "queued":
             break;
         default:
