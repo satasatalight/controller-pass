@@ -27,7 +27,7 @@ To refresh your link and generate a new host_secret, check the [quickstart guide
 The username you entered does not follow twitch's guidelines on username requirements.  
 Twitch Usernames must be between 4 and 25 characters and can only be written with letters, numbers and underscores.
 
-### User doesn't Exist!
-The username you entered wasn't found by the Twitch API.  
-If you are getting this error, you probably misspelled the username.  
-This error *could* also happen if you hit the Twitch API limit. The limit is 100 requests per minute, wait a minute before retyping the username.
+### User not found!
+The username you entered cannot be found by the Twitch API or cannot be found by the server.
+If you are getting this error, the chatter probably did not provide their identification to the extension.
+Try reminding the viewer to identify with the extension so they can be added to your chatroom listing server-side.
