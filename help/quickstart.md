@@ -70,12 +70,3 @@ To avoid opening Parsec as often, you should learn the global hotkeys Parsec pro
 - Kick All: `Ctrl + F3` to kick all currently connected viewers when invalidating a join link.
 
 You can always do these actions through the Parsec UI's bottom panel, however learning these shortcuts can make these inputs a lot snappier and move along a stream faster. You can rebind these shortcuts under the "Hotkeys" tab in the Parsec settings left panel.
-
-### Remind Viewers to Enable the Extension
-Controller-pass is still a "Testing Extension" on Twitch! As such, viewers need to manually opt-in to participate. 
-
-You might want to remind viewers to enable the extension while live. To enable the extension:
-1. Hover over the livestream.
-2. Click the puzzle piece icon on the right of the stream window.
-3. Read the warning on extensions not evaluated by Twitch.
-4. Click "Accept" to opt-in.
