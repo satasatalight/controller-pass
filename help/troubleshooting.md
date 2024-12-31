@@ -29,5 +29,4 @@ Twitch Usernames must be between 4 and 25 characters and can only be written wit
 
 ### User not found!
 The username you entered cannot be found by the Twitch API or cannot be found by the server.
-If you are getting this error, the chatter probably did not provide their identification to the extension.
-Try reminding the viewer to identify with the extension so they can be added to your chatroom listing server-side.
+If you are getting this error, you probably misspelled the chatter's name or the viewer may be watching from mobile / another platform without support for desktop extensions.
