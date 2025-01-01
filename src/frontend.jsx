@@ -11,7 +11,11 @@ let r = document.querySelector(':root');
 r.style.setProperty('color-scheme', 'light');
 
 window.Twitch.ext.onAuthorized(function(auth) {
-    passJWT(auth);
+    if(window.Twitch.ext.viewer.isLinked){
+        passJWT(auth);
+    } else {
+        window.Twitch.ext.actions.requestIdShare();
+    }
 
     window.Twitch.ext.listen("whisper-" + window.Twitch.ext.viewer.opaqueId, function(target, contentType, messageJSON) {
         let message = JSON.parse(messageJSON);
@@ -28,7 +32,7 @@ window.Twitch.ext.onAuthorized(function(auth) {
 
 
 function passJWT(auth){
-    fetch("http://localhost:3000/api/passAuth", {
+    fetch("https://controller-pass.onrender.com/api/passAuth", {
         method: "POST",
         headers: {
             "Content-type": "application/json; charset=UTF-8",

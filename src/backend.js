@@ -111,7 +111,7 @@ async function checkUsername(element){
         return;
     }
 
-    await fetch("http://localhost:3000/api/getOpaqueId", {
+    await fetch("https://controller-pass.onrender.com/api/getOpaqueId", {
         method: "POST",
         headers: {
             "Content-type": "application/json",
